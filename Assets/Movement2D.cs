@@ -6,7 +6,7 @@ public class Movement2D : MonoBehaviour
 {
     private float moveSpeed = 1.0f;
 
-    private int move_mode;
+    private int move_mode = 1;
 
     private Vector3 target_pos;
     private Vector3 moveDirection;

@@ -6,47 +6,31 @@ public class GameSystemScript : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private GameObject computerPrefab;
-    private List<GameObject> clone_arr;
+    private GameObject mynpcPrefab;
+    [SerializeField]
+    private GameObject othernpcPrefab;
+    [SerializeField]
+    private GameObject otherplayerPrefab;
     [SerializeField]
     private GameObject wallPrefab;
 
-    private int move_mode;
+    public List<GameObject> npc_arr;
+    public List<GameObject> user_arr;
 
+    private int id;
+    private int num_of_player;
+
+    private int move_mode;
     public float timer; 
     public int newtarget;
 
     void Start()
     {
+        npc_arr = new List<GameObject>();
+
+        num_of_player = 2;
         move_mode = 0;
-        timer = 0f;
-
-        clone_arr = new List<GameObject>();
-
-        int dx = Random.Range(-1, 1);
-        int dy = Random.Range(-1, 1);
-        for(int i = 0; i < 20; i++){
-            int x = Random.Range(-9, 9);
-            int y = Random.Range(-4, 4);
-            GameObject clone = Instantiate(computerPrefab, new Vector3(x, y, 0), Quaternion.identity);
-            clone.name = "Box" + i;
-            switch(move_mode){
-                case 0:
-                    clone.GetComponent<Movement2D>().SetTargetPos();
-                    break;
-                case 1:
-                    clone.GetComponent<Movement2D>().SetDirection(new Vector3(dx, dy, 0));
-                    break;
-            }
-            clone_arr.Add(clone);
-        }
-
-        for(int i = 0; i <= 40; i++){
-            for(int j = 0; j <= 60; j++){
-                if(i == 0 || i == 40 || j == 0 || j == 60)
-                    Instantiate(wallPrefab, new Vector3(j-30, i-20, 0), Quaternion.identity);
-            }
-        }
+        timer = 0f;  
     }
 
     // Update is called once per frame
@@ -68,22 +52,51 @@ public class GameSystemScript : MonoBehaviour
         }
     }
     
+    
     void ChangeDirection(){
         
-        foreach (GameObject clone in clone_arr)
+        foreach (GameObject npc in npc_arr)
         {
-            int dx = Random.Range(-1, 2);
-            int dy = Random.Range(-1, 2);
-            clone.GetComponent<Movement2D>().SetDirection(new Vector3(dx, dy, 0));
+            if(npc.name.Split('_')[0] == id +""){
+                int dx = Random.Range(-1, 2);
+                int dy = Random.Range(-1, 2);
+            
+                npc.GetComponent<Movement2D>().SetDirection(new Vector3(dx, dy, 0));
+            }      
         }
     }
 
     void ChangeTargetPos(){
-        int tx = Random.Range(-10, 10);
-        int ty = Random.Range(-10, 10);
-        foreach (GameObject clone in clone_arr)
+        foreach (GameObject npc in npc_arr)
         {
-            clone.GetComponent<Movement2D>().SetTargetPos();
+            if(npc.name.Split('_')[0] == id + ""){
+                npc.GetComponent<Movement2D>().SetTargetPos();
+            }
+        }
+    }
+
+    public void InitGame(int id){
+        this.id = id;
+        for(int i = 0; i < num_of_player; i++){
+            if(i != id){
+                GameObject other_player = Instantiate(otherplayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                other_player.name = "" + i;
+                user_arr.Add(other_player);
+            }
+            for(int j = 0; j < 4; j++){
+                int x = Random.Range(-9, 9);
+                int y = Random.Range(-4, 4);
+                if(i == id){
+                    GameObject npc = Instantiate(mynpcPrefab, new Vector3(x, y, 0), Quaternion.identity);
+                    npc.name = "" + id + "_" + j;
+                    npc_arr.Add(npc);
+                }
+                else{
+                    GameObject npc = Instantiate(othernpcPrefab, new Vector3(x, y, 0), Quaternion.identity);
+                    npc.name = "" + i  + "_" + j;
+                    npc_arr.Add(npc);
+                }
+            }
         }
     }
 }
