@@ -13,6 +13,8 @@ public class GameSystemScript : MonoBehaviour
     private GameObject otherplayerPrefab;
     [SerializeField]
     private GameObject wallPrefab;
+    [SerializeField]
+    private GameObject myplayer;
 
     public List<GameObject> npc_arr;
     public List<GameObject> user_arr;
@@ -82,6 +84,9 @@ public class GameSystemScript : MonoBehaviour
                 GameObject other_player = Instantiate(otherplayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 other_player.name = "" + i;
                 user_arr.Add(other_player);
+            }
+            else{
+                user_arr.Add(myplayer);
             }
             for(int j = 0; j < 4; j++){
                 int x = Random.Range(-9, 9);

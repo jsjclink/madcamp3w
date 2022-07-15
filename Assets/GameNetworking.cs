@@ -7,7 +7,7 @@ using System.Text;
 public class GameNetworking : MonoBehaviour
 {
     [SerializeField]
-    private GameObject MyPlayer;
+    private GameObject myplayer;
 
     WebSocket websocket;
     private int id;
@@ -35,7 +35,7 @@ public class GameNetworking : MonoBehaviour
         {
             var byteStr = System.Text.Encoding.UTF8.GetString(bytes);
 
-            Debug.Log("byteStr : " + byteStr);
+            //Debug.Log("byteStr : " + byteStr);
             
 
             var event_name = byteStr.Split('!')[0];
@@ -46,7 +46,7 @@ public class GameNetworking : MonoBehaviour
                 case "id_set":
                     id = int.Parse(message);
                     Debug.Log("ID_SET : " + id);
-                    MyPlayer.name = id+"";
+                    myplayer.name = id+"";
                     GetComponent<GameSystemScript>().InitGame(id);
                     break;
                 case "count_down":
@@ -54,6 +54,23 @@ public class GameNetworking : MonoBehaviour
                     InvokeRepeating("SendUnitPosition", 3.0f, 0.02f);
                     break;
                 case "all_position":
+                    List<GameObject> npc_arr = GetComponent<GameSystemScript>().npc_arr;
+                    List<GameObject> user_arr = GetComponent<GameSystemScript>().user_arr;
+                    string[] pos_arr_all = message.Split('/');
+                    foreach(string pos_arr_str in pos_arr_all){
+                        int tag = int.Parse(pos_arr_str.Split(',')[0]);
+                        string[] pos_arr = pos_arr_str.Split(';');
+                        if(tag != id){
+                            float user_x = float.Parse(pos_arr[0].Split(',')[1]);
+                            float user_y = float.Parse(pos_arr[0].Split(',')[2]);
+                            user_arr[tag].transform.position = new Vector3(user_x, user_y, 0);
+                            for(int i = 0; i < 4; i++){
+                                float x = float.Parse(pos_arr[i+1].Split(',')[1]);
+                                float y = float.Parse(pos_arr[i+1].Split(',')[2]);
+                                npc_arr[tag*4 + i].transform.position = new Vector3(x, y, 0);
+                            }
+                        }
+                    }
                     break;
             }
 
@@ -94,7 +111,7 @@ public class GameNetworking : MonoBehaviour
         {
             // Sending bytes
             // Sending plain text
-            await websocket.SendText("2,"+ MyPlayer.transform.position.x + "," +MyPlayer.transform.position.y + "," + "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdaasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdaaaaaaaaaaaasdasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" );
+            await websocket.SendText("2,"+ myplayer.transform.position.x + "," +myplayer.transform.position.y + "," + "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdaasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdaaaaaaaaaaaasdasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" );
         }
     }
 
@@ -105,7 +122,7 @@ public class GameNetworking : MonoBehaviour
 
     private async void SendUnitPosition(){
         //Debug.Log("SendUnitPosition");
-        string send_str = "unit_position!" + id + "," + MyPlayer.transform.position.x + "," + MyPlayer.transform.position.y + ";" ;
+        string send_str = "unit_position!" + id + "," + myplayer.transform.position.x + "," + myplayer.transform.position.y + ";" ;
         foreach (GameObject npc in GetComponent<GameSystemScript>().npc_arr)
         {
             if(npc.name.Split('_')[0] == id + ""){
