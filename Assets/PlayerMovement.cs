@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
-{
+{ 
+    [SerializeField]
+    private GameObject bullet;
     private float moveSpeed = 5.0f;
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rigid2D;
+    private int bulletcount = 300;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,38 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("right")){
+            if (bulletcount > 0){
+                GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
+                clone.GetComponent<BulletMovement>().setDirection(0);
+                bulletcount--;
+                Destroy(clone, 3.0f);
+            }
+        }
+        if (Input.GetKeyDown("up")){
+            if (bulletcount > 0){
+                GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
+                clone.GetComponent<BulletMovement>().setDirection(1);
+                bulletcount--;
+                Destroy(clone, 3.0f);
+            }
+        }
+        if (Input.GetKeyDown("down")){
+            if (bulletcount > 0){
+                GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
+                clone.GetComponent<BulletMovement>().setDirection(2);
+                bulletcount--;
+                Destroy(clone, 3.0f);
+            }
+        }
+        if (Input.GetKeyDown("left")){
+            if (bulletcount > 0){
+                GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
+                clone.GetComponent<BulletMovement>().setDirection(3);
+                bulletcount--;
+                Destroy(clone, 3.0f);
+            }
+        }
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
