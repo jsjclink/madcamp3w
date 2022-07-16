@@ -161,7 +161,10 @@ public class GameNetworking : MonoBehaviour
         string send_str = "unit_position!" + id + "," + myplayer.transform.position.x + "," + myplayer.transform.position.y + ";" ;
         foreach (GameObject npc in GetComponent<GameSystemScript>().npc_arr)
         {
-            if(npc.name.Split('_')[0] == id + ""){
+            if (npc == null){
+               send_str += id + "," + "npc.transform.position.x" + "," + "npc.transform.position.y" + ";"; 
+            }
+            else if(npc.name.Split('_')[0] == id + ""){
                 send_str += id + "," + npc.transform.position.x + "," + npc.transform.position.y + ";";
             }
         }
