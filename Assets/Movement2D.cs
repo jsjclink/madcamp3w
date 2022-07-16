@@ -11,6 +11,12 @@ public class Movement2D : MonoBehaviour
     private Vector3 target_pos;
     private Vector3 moveDirection;
 
+    private SpriteRenderer spriteRenderer;
+
+    void Start(){
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void SetTargetPos(){
         move_mode = 0;
         
@@ -28,9 +34,21 @@ public class Movement2D : MonoBehaviour
     void Update(){
         switch(move_mode){
             case 0:
+                if((target_pos - transform.position).x < 0){
+                    spriteRenderer.flipX = true;
+                }
+                else{
+                    spriteRenderer.flipX = false;
+                }
                 transform.position = Vector3.MoveTowards(transform.position, target_pos, moveSpeed * Time.deltaTime);
                 break;
             case 1:
+                if(moveDirection.x < 0){
+                    spriteRenderer.flipX = true;
+                }
+                else{
+                    spriteRenderer.flipX = false;
+                }
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
                 break;
         }

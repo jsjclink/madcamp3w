@@ -10,11 +10,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rigid2D;
     private int bulletcount = 300;
+    private SpriteRenderer spriteRenderer;
     
     // Start is called before the first frame update
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -54,6 +56,12 @@ public class PlayerMovement : MonoBehaviour
         }
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
+        if(x < 0){
+            spriteRenderer.flipX = true;
+        }
+        else if(x > 0){
+            spriteRenderer.flipX = false;
+        }
 
         rigid2D.velocity = new Vector3(x,y,0) * moveSpeed;
     }
