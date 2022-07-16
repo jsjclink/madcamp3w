@@ -29,10 +29,17 @@ public class GameSystemScript : MonoBehaviour
     void Start()
     {
         npc_arr = new List<GameObject>();
+        user_arr = new List<GameObject>();
 
-        num_of_player = 2;
+        num_of_player = 3;
         move_mode = 0;
         timer = 0f;  
+        for(int i = 0; i <= 40; i++){
+            for(int j = 0; j <= 60; j++){
+                if(i == 0 || i == 40 || j == 0 || j == 60)
+                    Instantiate(wall, new Vector3(j-30, i-20, 0), Quaternion.identity);
+            }
+        }
     }
 
     // Update is called once per frame
