@@ -9,7 +9,7 @@ public class GameNetworking : MonoBehaviour
     [SerializeField]
     private GameObject myplayer;
 
-    WebSocket websocket;
+    public static WebSocket websocket;
     private int id;
     // Start is called before the first frame update
     async void Start()
@@ -51,7 +51,7 @@ public class GameNetworking : MonoBehaviour
                     break;
                 case "count_down":
                     Debug.Log("COUNT_DOWN");
-                    InvokeRepeating("SendUnitPosition", 3.0f, 0.02f);
+                    InvokeRepeating("SendUnitPosition", 3.0f, 0.01f);
                     break;
                 case "all_position":
                     List<GameObject> npc_arr = GetComponent<GameSystemScript>().npc_arr;
@@ -63,15 +63,51 @@ public class GameNetworking : MonoBehaviour
                         if(tag != id){
                             float user_x = float.Parse(pos_arr[0].Split(',')[1]);
                             float user_y = float.Parse(pos_arr[0].Split(',')[2]);
-                            user_arr[tag].transform.position = new Vector3(user_x, user_y, 0);
+                            if (user_arr[tag] != null){
+                                user_arr[tag].transform.position = new Vector3(user_x, user_y, 0);
+                            }
                             for(int i = 0; i < 4; i++){
                                 float x = float.Parse(pos_arr[i+1].Split(',')[1]);
                                 float y = float.Parse(pos_arr[i+1].Split(',')[2]);
-                                npc_arr[tag*4 + i].transform.position = new Vector3(x, y, 0);
+                                if (npc_arr[tag*4 + i] != null){
+                                    npc_arr[tag*4 + i].transform.position = new Vector3(x, y, 0);
+                                }
                             }
                         }
                     }
                     break;
+                case "die":
+                    Debug.Log("die came");
+                    List<GameObject> npc_arr1 = GetComponent<GameSystemScript>().npc_arr;
+                    List<GameObject> user_arr1 = GetComponent<GameSystemScript>().user_arr;
+                    if (message.Contains("_")){
+                        for (int i = 0; i< npc_arr1.Count; i++){
+                            if (npc_arr1[i] != null){
+                                if (npc_arr1[i].name == message){
+                                    Destroy(npc_arr1[i]);
+                                    npc_arr1[i] = null;
+                            }
+                            } 
+                        }
+                    }
+                    else {
+                        if (id == int.Parse(message)) {
+                            //내가 뒤진거 
+                        }
+                        else{
+                            for (int i = 0; i< user_arr1.Count; i++){
+                                if (user_arr1[i] != null){
+                                    if (user_arr1[i].name == message){
+                                        Destroy(user_arr1[i]);
+                                        user_arr1[i] = null;
+                                }
+                                }  
+                        }
+                        }
+                        
+                    }
+                    break;
+
             }
 
             /*
@@ -105,15 +141,15 @@ public class GameNetworking : MonoBehaviour
         #endif
     }
 
-    async void SendWebSocketMessage()
-    {
-        if (websocket.State == WebSocketState.Open)
-        {
-            // Sending bytes
-            // Sending plain text
-            await websocket.SendText("2,"+ myplayer.transform.position.x + "," +myplayer.transform.position.y + "," + "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdaasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdaaaaaaaaaaaasdasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" );
-        }
-    }
+    // async void SendWebSocketMessage()
+    // {
+    //     if (websocket.State == WebSocketState.Open)
+    //     {
+    //         // Sending bytes
+    //         // Sending plain text
+    //         await websocket.SendText("2,"+ myplayer.transform.position.x + "," +myplayer.transform.position.y + "," + "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdaasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdaaaaaaaaaaaasdasdasdasdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" );
+    //     }
+    // }
 
     private async void OnApplicationQuit()
     {

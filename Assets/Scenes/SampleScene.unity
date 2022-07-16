@@ -255,6 +255,7 @@ MonoBehaviour:
   othernpcPrefab: {fileID: 8070263442019689923, guid: 8a5a84c872ed90f42b864710b42bfe04, type: 3}
   otherplayerPrefab: {fileID: 652268974320247201, guid: a6695c8b369276a4e8a68eda79a9f9fc, type: 3}
   wallPrefab: {fileID: 6608378792402068876, guid: 6aca5dec13503874d979a79cb2103272, type: 3}
+  myplayer: {fileID: 1424258518}
   npc_arr: []
   user_arr: []
   timer: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568ce11fad28344499dd89d76962dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlayer: {fileID: 1424258518}
+  myplayer: {fileID: 1424258518}
 --- !u!1 &1424258518
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16948c67f93b9f4aa7978b742f95318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 7326268279735561755, guid: 2bce1d124632946f1ac9ac57bc764ae6, type: 3}
 --- !u!50 &1424258520
 Rigidbody2D:
   serializedVersion: 4

@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using NativeWebSocket;
 public class BulletMovement : MonoBehaviour
 {
     private int mode;
     private float time;
+    [SerializeField]
     // Start is called before the first frame update\
-    
+    WebSocket websocket;
     public void setDirection(int direction){
         mode = direction;
     }
     void Start()
     {
-        
+        websocket = GameNetworking.websocket;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision){
-        Debug.Log(collision.transform.name);
+    private async void OnCollisionEnter2D(Collision2D collision){
         Destroy(gameObject);
+        await websocket.SendText("hit!"+ collision.transform.name);
     }
 
 

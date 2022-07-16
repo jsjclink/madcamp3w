@@ -37,7 +37,7 @@ public class GameSystemScript : MonoBehaviour
         for(int i = 0; i <= 40; i++){
             for(int j = 0; j <= 60; j++){
                 if(i == 0 || i == 40 || j == 0 || j == 60)
-                    Instantiate(wall, new Vector3(j-30, i-20, 0), Quaternion.identity);
+                    Instantiate(wallPrefab, new Vector3(j-30, i-20, 0), Quaternion.identity);
             }
         }
     }
@@ -66,6 +66,7 @@ public class GameSystemScript : MonoBehaviour
         
         foreach (GameObject npc in npc_arr)
         {
+            if (npc == null) return;
             if(npc.name.Split('_')[0] == id +""){
                 int dx = Random.Range(-1, 2);
                 int dy = Random.Range(-1, 2);
@@ -78,6 +79,7 @@ public class GameSystemScript : MonoBehaviour
     void ChangeTargetPos(){
         foreach (GameObject npc in npc_arr)
         {
+            if (npc == null) return;
             if(npc.name.Split('_')[0] == id + ""){
                 npc.GetComponent<Movement2D>().SetTargetPos();
             }
