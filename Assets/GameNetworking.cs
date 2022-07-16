@@ -92,7 +92,11 @@ public class GameNetworking : MonoBehaviour
                     }
                     else {
                         if (id == int.Parse(message)) {
-                            //내가 뒤진거 
+                             for (int i = 0; i < user_arr1.Count; i++){
+                                 if (user_arr1[i].name == ("" + id)){
+                                     Destroy(user_arr1[i].GetComponent<Rigidbody>());
+                                 }
+                             }
                         }
                         else{
                             for (int i = 0; i< user_arr1.Count; i++){
@@ -162,7 +166,7 @@ public class GameNetworking : MonoBehaviour
         foreach (GameObject npc in GetComponent<GameSystemScript>().npc_arr)
         {
             if (npc == null){
-               send_str += id + "," + "npc.transform.position.x" + "," + "npc.transform.position.y" + ";"; 
+               send_str += id + "," + " " + "," + " " + ";"; 
             }
             else if(npc.name.Split('_')[0] == id + ""){
                 send_str += id + "," + npc.transform.position.x + "," + npc.transform.position.y + ";";

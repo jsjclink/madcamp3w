@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("right")){
+        if (Input.GetKeyDown("l")){
             if (bulletcount > 0){
                 GameObject clone = Instantiate(bullet, transform.position + new Vector3(1,0,0), Quaternion.identity);
                 clone.GetComponent<BulletMovement>().setDirection(0);
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
         }
-        if (Input.GetKeyDown("up")){
+        if (Input.GetKeyDown("i")){
             if (bulletcount > 0){
                 GameObject clone = Instantiate(bullet, transform.position + new Vector3(0,1,0), Quaternion.identity);
                 clone.GetComponent<BulletMovement>().setDirection(1);
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
         }
-        if (Input.GetKeyDown("down")){
+        if (Input.GetKeyDown("k")){
             if (bulletcount > 0){
                 GameObject clone = Instantiate(bullet, transform.position + new Vector3(0,-1,0), Quaternion.identity);
                 clone.GetComponent<BulletMovement>().setDirection(2);
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
         }
-        if (Input.GetKeyDown("left")){
+        if (Input.GetKeyDown("j")){
             if (bulletcount > 0){
                 GameObject clone = Instantiate(bullet, transform.position + new Vector3(-1,0,0), Quaternion.identity);
                 clone.GetComponent<BulletMovement>().setDirection(3);
