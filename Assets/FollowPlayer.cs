@@ -32,7 +32,7 @@ public class FollowPlayer : MonoBehaviour
     {
 
         time += Time.deltaTime;
-        
+        Debug.Log(time);
         if (time > term && flag == 1){
             if (transform.GetComponent<Camera>().orthographicSize <20){
                 transform.GetComponent<Camera>().orthographicSize += 0.05f;
@@ -50,8 +50,7 @@ public class FollowPlayer : MonoBehaviour
                  }
                  flag2 = 1;
             }
-            else if (time > term + 11.0f){
-                    Debug.Log("sent");
+            if (time > term + 11.0f){
                     flag = 0;
                     isappeared = false;
                     GameNetworking.websocket.SendText("zoomout");
