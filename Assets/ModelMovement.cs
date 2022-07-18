@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class ModelMovement : MonoBehaviour
 {
-    private int option;
+    private int option = 0;
     private float time;
     // Start is called before the first frame update
     void Start()
     {
         option = Random.Range(0,3);
+    }
+
+    public void setOption(int op){
+        option = op;
     }
 
     // Update is called once per frame

@@ -111,6 +111,15 @@ public class GameNetworking : MonoBehaviour
                         
                     }
                     break;
+                case "random_move":
+                    string[] temp = message.Split("_");
+                    string time =temp[0];
+                    Debug.Log("Time: " + temp[0]);
+                    string choice = temp[1];
+                    Debug.Log("Choice: " + temp[1]);
+                    FollowPlayer.setterm(float.Parse(time), int.Parse(choice));
+                    break;
+                    
 
             }
 

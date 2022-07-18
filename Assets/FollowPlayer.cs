@@ -10,15 +10,20 @@ public class FollowPlayer : MonoBehaviour
     private GameObject model;
 
     private GameObject clone;
-    private int term = 3;
-    private float time = 0.0f;
+    private static float term;
+    private static float time = 0.0f;
     private bool isappeared = false;
+    private static int choice = 0;
     // Start is called before the first frame update
     void Start()
     {
-        term = Random.Range(3,5);
+        term = 3.0f;
     }
-
+    public static void setterm(float amount, int choi){
+        term = amount;
+        choice = choi;
+        time = 0.0f;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -29,16 +34,16 @@ public class FollowPlayer : MonoBehaviour
             if (transform.GetComponent<Camera>().orthographicSize <20){
                 transform.GetComponent<Camera>().orthographicSize += 0.05f;
             }
-            if (time > 5 && !isappeared){
+            if (time > term + 3.0f && !isappeared){
                 isappeared = true;
                 Debug.Log("appeared");
-                clone = Instantiate(model, new Vector3(3,3,-1), Quaternion.identity);
+                clone = Instantiate(model, new Vector3(-1,0,-1), Quaternion.identity);
+                clone.GetComponent<ModelMovement>().setOption(choice);
                 Destroy(clone, 3.0f);
             }
-            else if (time > 10){
+            else if (time > term + 8.0f){
                 isappeared = false;
                 transform.GetComponent<Camera>().orthographicSize = 5;
-                term = Random.Range(3,5);
                 time = 0.0f;
             }
             
