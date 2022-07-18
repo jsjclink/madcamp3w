@@ -15,6 +15,7 @@ public class FollowPlayer : MonoBehaviour
     private bool isappeared = false;
     private static int choice = 0;
     private static int flag = 0;
+    private int flag2 = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,19 +44,21 @@ public class FollowPlayer : MonoBehaviour
                 clone.GetComponent<ModelMovement>().setOption(choice);
                 Destroy(clone, 3.0f);
             }
-            else if (time > term + 8.0f){
+            else if (time > term + 8.0f && flag2 == 0){
                 for (int i = 0; i<4; i++){
                     GameSystemScript.npc_arr[GameSystemScript.id*4 + i].GetComponent<Movement2D>().randomTime(choice);
                  }
-                if (time > term + 11.0f){
+                 flag2 = 1;
+            }
+            else if (time > term + 11.0f){
                     Debug.Log("sent");
                     flag = 0;
                     isappeared = false;
                     GameNetworking.websocket.SendText("zoomout");
                     transform.GetComponent<Camera>().orthographicSize = 5;
                     time = 0.0f;
+                    flag2 = 0;
                 } 
-            }
             
         }
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100);
