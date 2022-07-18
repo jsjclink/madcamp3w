@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 public class GameNetworking : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameNetworking : MonoBehaviour
 
     public static WebSocket websocket;
     private int id;
+    private int user_cnt = 2;
     // Start is called before the first frame update
     async void Start()
     {
@@ -86,6 +88,8 @@ public class GameNetworking : MonoBehaviour
                                 if (npc_arr1[i].name == message){
                                     Destroy(npc_arr1[i]);
                                     npc_arr1[i] = null;
+                                    user_cnt--;
+                                    if(user_cnt == 1) SceneManager.LoadScene("GameOverScene");
                             }
                             } 
                         }
@@ -97,6 +101,8 @@ public class GameNetworking : MonoBehaviour
                                  if (user_arr1[i].name == ("" + id)){
                                     //Destroy(user_arr1[i].GetComponent<Rigidbody>());
                                     user_arr1[i].GetComponent<Animator>().SetBool("is_die", true);
+                                    user_cnt--;
+                                    if(user_cnt == 1) SceneManager.LoadScene("GameOverScene");                                    
                                  }
                              }
                         }
