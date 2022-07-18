@@ -45,6 +45,9 @@ public class FollowPlayer : MonoBehaviour
             }
             else if (time > term + 8.0f){
                  GameNetworking.websocket.SendText("zoomout");
+                 for (int i = 0; i<4; i++){
+                    GameSystemScript.npc_arr[GameSystemScript.id*4 + i].GetComponent<Movement2D>().randomTime(choice);
+                 }
                 Debug.Log("sent");
                 flag = 0;
                 isappeared = false;

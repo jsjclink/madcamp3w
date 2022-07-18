@@ -12,7 +12,9 @@ public class Movement2D : MonoBehaviour
     private Vector3 moveDirection;
 
     private SpriteRenderer spriteRenderer;
-
+    private int randomtime = 0;
+    private float time = 0.0f;
+    private int option = 0;
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -30,27 +32,92 @@ public class Movement2D : MonoBehaviour
         move_mode = 1;
         moveDirection = direction;
     }
+    public void randomTime(int mode){
+        randomtime = 1;
+        time = 0.0f;
+        option = mode;
+    }
 
     void Update(){
-        switch(move_mode){
-            case 0:
-                if((target_pos - transform.position).x < 0){
-                    spriteRenderer.flipX = true;
-                }
-                else{
-                    spriteRenderer.flipX = false;
-                }
-                transform.position = Vector3.MoveTowards(transform.position, target_pos, moveSpeed * Time.deltaTime);
-                break;
-            case 1:
-                if(moveDirection.x < 0){
-                    spriteRenderer.flipX = true;
-                }
-                else{
-                    spriteRenderer.flipX = false;
-                }
-                transform.position += moveDirection * moveSpeed * Time.deltaTime;
-                break;
+        time += Time.deltaTime;
+
+        if (randomtime == 0){
+            switch(move_mode){
+                case 0:
+                    if((target_pos - transform.position).x < 0){
+                        spriteRenderer.flipX = true;
+                    }
+                    else{
+                        spriteRenderer.flipX = false;
+                    }
+                    transform.position = Vector3.MoveTowards(transform.position, target_pos, moveSpeed * Time.deltaTime);
+                    break;
+                case 1:
+                    if(moveDirection.x < 0){
+                        spriteRenderer.flipX = true;
+                    }
+                    else{
+                        spriteRenderer.flipX = false;
+                    }
+                    transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                    break;
+            }
         }
+        else{
+            switch(option){
+                case 0:
+                    if (time<1){
+                        transform.position = transform.position + Vector3.up * 2 * Time.deltaTime;
+                    }
+                    else if (time>1 && time<2){
+                        transform.position = transform.position + Vector3.right * 2 * Time.deltaTime; 
+                    }
+                    else if (time<3){
+                        transform.position = transform.position + Vector3.down * 2 * Time.deltaTime;
+                    }
+                    else{
+                        randomtime = 0;
+                    }
+                    break;
+                case 1:
+                    if (time<1){
+                        transform.position = transform.position + new Vector3(1,1,0) * 2 * Time.deltaTime;
+                    }
+                    else if (time>1 && time<2){
+                        transform.position = transform.position + new Vector3(1,-1,0) * 2 * Time.deltaTime; 
+                    }
+                    else if (time<3){
+                        transform.position = transform.position + Vector3.left * 2 * Time.deltaTime;
+                    }
+                    else{
+                        randomtime = 0;
+                    }
+                    break;
+                case 2:
+                    if (time<0.5){
+                        transform.position = transform.position + new Vector3(-1,1,0) * 2 * Time.deltaTime;
+                    }
+                    else if (time>0.5 && time<1){
+                        transform.position = transform.position + new Vector3(1,1,0) * 2 * Time.deltaTime; 
+                    }
+                    else if (time>1.0 && time<1.5){
+                        transform.position = transform.position + new Vector3(1,0,0) * 2 * Time.deltaTime;
+                    }
+                    else if (time>1.5 && time<2.0){
+                        transform.position = transform.position + new Vector3(1,-1,0) * 2 * Time.deltaTime;
+                    }
+                    else if (time>2.0 && time< 2.5){
+                        transform.position = transform.position + new Vector3(-1,-1,0) * 2 * Time.deltaTime;
+                    }
+                    else if (time>2.5 && time<3.0){
+                        transform.position = transform.position + new Vector3(-1,0,0) * 2 * Time.deltaTime;
+                    }
+                    else{
+                        randomtime = 0;
+                    }
+                    break;
+        }
+        }
+        
     }
 }

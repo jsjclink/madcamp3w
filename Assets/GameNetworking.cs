@@ -54,8 +54,8 @@ public class GameNetworking : MonoBehaviour
                     InvokeRepeating("SendUnitPosition", 3.0f, 0.01f);
                     break;
                 case "all_position":
-                    List<GameObject> npc_arr = GetComponent<GameSystemScript>().npc_arr;
-                    List<GameObject> user_arr = GetComponent<GameSystemScript>().user_arr;
+                    List<GameObject> npc_arr = GameSystemScript.npc_arr;
+                    List<GameObject> user_arr = GameSystemScript.user_arr;
                     string[] pos_arr_all = message.Split('/');
                     foreach(string pos_arr_str in pos_arr_all){
                         int tag = int.Parse(pos_arr_str.Split(',')[0]);
@@ -78,8 +78,8 @@ public class GameNetworking : MonoBehaviour
                     break;
                 case "die":
                     Debug.Log("die came");
-                    List<GameObject> npc_arr1 = GetComponent<GameSystemScript>().npc_arr;
-                    List<GameObject> user_arr1 = GetComponent<GameSystemScript>().user_arr;
+                    List<GameObject> npc_arr1 = GameSystemScript.npc_arr;
+                    List<GameObject> user_arr1 = GameSystemScript.user_arr;
                     if (message.Contains("_")){
                         for (int i = 0; i< npc_arr1.Count; i++){
                             if (npc_arr1[i] != null){
@@ -174,7 +174,7 @@ public class GameNetworking : MonoBehaviour
     private async void SendUnitPosition(){
         //Debug.Log("SendUnitPosition");
         string send_str = "unit_position!" + id + "," + myplayer.transform.position.x + "," + myplayer.transform.position.y + ";" ;
-        foreach (GameObject npc in GetComponent<GameSystemScript>().npc_arr)
+        foreach (GameObject npc in GameSystemScript.npc_arr)
         {
             if (npc == null){
                send_str += id + "," + "0.0" + "," + "0.0" + ";"; 

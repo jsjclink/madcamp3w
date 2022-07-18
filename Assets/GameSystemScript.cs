@@ -16,10 +16,10 @@ public class GameSystemScript : MonoBehaviour
     [SerializeField]
     private GameObject myplayer;
 
-    public List<GameObject> npc_arr;
-    public List<GameObject> user_arr;
+    public static List<GameObject> npc_arr;
+    public static List<GameObject> user_arr;
 
-    private int id;
+    public static int id;
     private int num_of_player;
 
     private int move_mode;
@@ -31,7 +31,7 @@ public class GameSystemScript : MonoBehaviour
         npc_arr = new List<GameObject>();
         user_arr = new List<GameObject>();
 
-        num_of_player = 3;
+        num_of_player = 1;
         move_mode = 0;
         timer = 0f;  
        
@@ -82,7 +82,7 @@ public class GameSystemScript : MonoBehaviour
     }
 
     public void InitGame(int id){
-        this.id = id;
+        GameSystemScript.id = id;
         for(int i = 0; i < num_of_player; i++){
             if(i != id){
                 GameObject other_player = Instantiate(otherplayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
