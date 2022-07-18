@@ -9,7 +9,7 @@ public class ModelMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        option = Random.Range(0,3);
+       
     }
 
     public void setOption(int op){

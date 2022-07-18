@@ -31,7 +31,7 @@ public class GameSystemScript : MonoBehaviour
         npc_arr = new List<GameObject>();
         user_arr = new List<GameObject>();
 
-        num_of_player = 1;
+        num_of_player = 3;
         move_mode = 0;
         timer = 0f;  
        

@@ -44,15 +44,17 @@ public class FollowPlayer : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
             else if (time > term + 8.0f){
-                 GameNetworking.websocket.SendText("zoomout");
-                 for (int i = 0; i<4; i++){
+                for (int i = 0; i<4; i++){
                     GameSystemScript.npc_arr[GameSystemScript.id*4 + i].GetComponent<Movement2D>().randomTime(choice);
                  }
-                Debug.Log("sent");
-                flag = 0;
-                isappeared = false;
-                transform.GetComponent<Camera>().orthographicSize = 5;
-                time = 0.0f;
+                if (time > term + 11.0f){
+                    Debug.Log("sent");
+                    flag = 0;
+                    isappeared = false;
+                    GameNetworking.websocket.SendText("zoomout");
+                    transform.GetComponent<Camera>().orthographicSize = 5;
+                    time = 0.0f;
+                } 
             }
             
         }
