@@ -14,6 +14,7 @@ public class FollowPlayer : MonoBehaviour
     private static float time = 0.0f;
     private bool isappeared = false;
     private static int choice = 0;
+    private static int flag = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class FollowPlayer : MonoBehaviour
         term = amount;
         choice = choi;
         time = 0.0f;
+        flag = 1;
     }
     // Update is called once per frame
     void Update()
@@ -30,7 +32,7 @@ public class FollowPlayer : MonoBehaviour
 
         time += Time.deltaTime;
         
-        if (time > term){
+        if (time > term && flag == 1){
             if (transform.GetComponent<Camera>().orthographicSize <20){
                 transform.GetComponent<Camera>().orthographicSize += 0.05f;
             }
@@ -42,6 +44,7 @@ public class FollowPlayer : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
             else if (time > term + 8.0f){
+                flag = 0;
                 isappeared = false;
                 transform.GetComponent<Camera>().orthographicSize = 5;
                 time = 0.0f;
