@@ -176,7 +176,7 @@ public class GameNetworking : MonoBehaviour
         foreach (GameObject npc in GetComponent<GameSystemScript>().npc_arr)
         {
             if (npc == null){
-               send_str += id + "," + " " + "," + " " + ";"; 
+               send_str += id + "," + "0.0f" + "," + "0.0f" + ";"; 
             }
             else if(npc.name.Split('_')[0] == id + ""){
                 send_str += id + "," + npc.transform.position.x + "," + npc.transform.position.y + ";";

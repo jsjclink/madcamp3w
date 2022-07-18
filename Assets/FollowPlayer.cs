@@ -44,6 +44,8 @@ public class FollowPlayer : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
             else if (time > term + 8.0f){
+                 GameNetworking.websocket.SendText("zoomout");
+                Debug.Log("sent");
                 flag = 0;
                 isappeared = false;
                 transform.GetComponent<Camera>().orthographicSize = 5;
