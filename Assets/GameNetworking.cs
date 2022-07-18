@@ -94,7 +94,8 @@ public class GameNetworking : MonoBehaviour
                         if (id == int.Parse(message)) {
                              for (int i = 0; i < user_arr1.Count; i++){
                                  if (user_arr1[i].name == ("" + id)){
-                                     Destroy(user_arr1[i].GetComponent<Rigidbody>());
+                                    //Destroy(user_arr1[i].GetComponent<Rigidbody>());
+                                    user_arr1[i].GetComponent<Animator>().SetBool("is_die", true);
                                  }
                              }
                         }
