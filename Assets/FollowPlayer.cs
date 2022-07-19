@@ -32,7 +32,7 @@ public class FollowPlayer : MonoBehaviour
     {
 
         time += Time.deltaTime;
-        Debug.Log(time);
+        //Debug.Log(time);
         if (time > term && flag == 1){
             if (transform.GetComponent<Camera>().orthographicSize <20){
                 transform.GetComponent<Camera>().orthographicSize += 0.05f;
@@ -45,7 +45,7 @@ public class FollowPlayer : MonoBehaviour
                 Destroy(clone, 3.0f);
             }
             else if (time > term + 8.0f && flag2 == 0){
-                for (int i = 0; i<4; i++){
+                for (int i = 0; i<50; i++){
                     GameSystemScript.npc_arr[GameSystemScript.id*4 + i].GetComponent<Movement2D>().randomTime(choice);
                  }
                  flag2 = 1;

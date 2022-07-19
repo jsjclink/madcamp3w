@@ -22,8 +22,8 @@ public class Movement2D : MonoBehaviour
     public void SetTargetPos(){
         move_mode = 0;
         
-        float xPos = transform.position.x + Random.Range(transform.position.x - 10, transform.position.x + 10);
-        float yPos = transform.position.y + Random.Range(transform.position.y - 10, transform.position.y + 10);
+        float xPos = Random.Range(transform.position.x - 10, transform.position.x + 10);
+        float yPos = Random.Range(transform.position.y - 10, transform.position.y + 10);
 
         target_pos = new Vector3(xPos, yPos, 0);
     }

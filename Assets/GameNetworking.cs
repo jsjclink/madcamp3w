@@ -68,11 +68,11 @@ public class GameNetworking : MonoBehaviour
                             if (user_arr[tag] != null){
                                 user_arr[tag].transform.position = new Vector3(user_x, user_y, 0);
                             }
-                            for(int i = 0; i < 4; i++){
+                            for(int i = 0; i < 50; i++){
                                 float x = float.Parse(pos_arr[i+1].Split(',')[1]);
                                 float y = float.Parse(pos_arr[i+1].Split(',')[2]);
-                                if (npc_arr[tag*4 + i] != null){
-                                    npc_arr[tag*4 + i].transform.position = new Vector3(x, y, 0);
+                                if (npc_arr[tag*50 + i] != null){
+                                    npc_arr[tag*50 + i].transform.position = new Vector3(x, y, 0);
                                 }
                             }
                         }
