@@ -31,7 +31,7 @@ public class GameSystemScript : MonoBehaviour
         npc_arr = new List<GameObject>();
         user_arr = new List<GameObject>();
 
-        num_of_player = 2;
+        num_of_player = 3;
         move_mode = 0;
         timer = 0f;  
        
@@ -92,7 +92,7 @@ public class GameSystemScript : MonoBehaviour
             else{
                 user_arr.Add(myplayer);
             }
-            for(int j = 0; j < 50; j++){
+            for(int j = 0; j < 40; j++){
                 int x = Random.Range(-9, 9);
                 int y = Random.Range(-4, 4);
                 if(i == id){

@@ -12,7 +12,7 @@ public class GameNetworking : MonoBehaviour
 
     public static WebSocket websocket;
     private int id;
-    private int user_cnt = 2;
+    private int user_cnt = 3;
     // Start is called before the first frame update
     async void Start()
     {
@@ -68,11 +68,11 @@ public class GameNetworking : MonoBehaviour
                             if (user_arr[tag] != null){
                                 user_arr[tag].transform.position = new Vector3(user_x, user_y, 0);
                             }
-                            for(int i = 0; i < 50; i++){
+                            for(int i = 0; i < 40; i++){
                                 float x = float.Parse(pos_arr[i+1].Split(',')[1]);
                                 float y = float.Parse(pos_arr[i+1].Split(',')[2]);
-                                if (npc_arr[tag*50 + i] != null){
-                                    npc_arr[tag*50 + i].transform.position = new Vector3(x, y, 0);
+                                if (npc_arr[tag*40 + i] != null){
+                                    npc_arr[tag*40 + i].transform.position = new Vector3(x, y, 0);
                                 }
                             }
                         }
@@ -88,9 +88,7 @@ public class GameNetworking : MonoBehaviour
                                 if (npc_arr1[i].name == message){
                                     Destroy(npc_arr1[i]);
                                     npc_arr1[i] = null;
-                                    user_cnt--;
-                                    if(user_cnt == 1) SceneManager.LoadScene("GameOverScene");
-                            }
+                                }
                             } 
                         }
                     }
@@ -112,7 +110,9 @@ public class GameNetworking : MonoBehaviour
                                     if (user_arr1[i].name == message){
                                         Destroy(user_arr1[i]);
                                         user_arr1[i] = null;
-                                }
+                                        user_cnt--;
+                                        if(user_cnt == 1) SceneManager.LoadScene("GameWin");
+                                    }
                                 }  
                         }
                         }
