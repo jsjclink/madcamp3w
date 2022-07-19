@@ -32,7 +32,7 @@ public class FollowPlayer : MonoBehaviour
     {
 
         time += Time.deltaTime;
-        //Debug.Log(time);
+        
         if (time > term && flag == 1){
             if (transform.GetComponent<Camera>().orthographicSize <20){
                 transform.GetComponent<Camera>().orthographicSize += 0.05f;
@@ -40,19 +40,21 @@ public class FollowPlayer : MonoBehaviour
             if (time > term + 3.0f && !isappeared){
                 isappeared = true;
                 Debug.Log("appeared");
+                SoundEffect.playStarSound();
                 clone = Instantiate(model, new Vector3(-1,0,-1), Quaternion.identity);
                 clone.GetComponent<ModelMovement>().setOption(choice);
                 Destroy(clone, 3.0f);
             }
             else if (time > term + 8.0f && flag2 == 0){
                 for (int i = 0; i<50; i++){
-                    GameSystemScript.npc_arr[GameSystemScript.id*4 + i].GetComponent<Movement2D>().randomTime(choice);
-                 }
+                    GameSystemScript.npc_arr[GameSystemScript.id*50 + i].GetComponent<Movement2D>().randomTime(choice);
+                 }  
                  flag2 = 1;
             }
             if (time > term + 11.0f){
                     flag = 0;
                     isappeared = false;
+                    SoundEffect.stopStarSound();
                     GameNetworking.websocket.SendText("zoomout");
                     transform.GetComponent<Camera>().orthographicSize = 5;
                     time = 0.0f;
