@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movement2D : MonoBehaviour
 {
-    private float moveSpeed = 1.0f;
+    private float moveSpeed = 2.0f;
 
     private int move_mode = 1;
 
